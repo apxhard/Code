@@ -2,7 +2,7 @@
  * author's email: poorna@cs.arizona.edu
  */
 
-// headers
+// headers   
 #include <iostream>
 #include <fstream>
 #include <queue>
@@ -271,12 +271,12 @@ void StringSearch (char *S, long N, char *P, int M, long *A,
     long L=0,R=N-1,mid;
     while (R-L > 1) 
       {
-	mid=(L+R)/2;
+    mid=(L+R)/2;
 #ifdef DEBUGLEVEL
-	cout <<"(L,M,R) :: "<<L<<", "<<mid<<", "<<R<<endl;
+    cout <<"(L,M,R) :: "<<L<<", "<<mid<<", "<<R<<endl;
 #endif
-	if (lexm(P,(long)M,S+A[mid]-1, N-A[mid]+1)) R=mid;
-	else L=mid;
+    if (lexm(P,(long)M,S+A[mid]-1, N-A[mid]+1)) R=mid;
+    else L=mid;
       }
     *Lo=R;
   }
@@ -295,21 +295,21 @@ void StringSearch (char *S, long N, char *P, int M, long *A,
     long L=0,R=N-1,mid;
     while (R-L>1) 
       {
-	mid = (L+R)/2;
+    mid = (L+R)/2;
 
 #ifdef DEBUGLEVEL
-	cout <<"(L,M,R) :: "<<L<<", "<<mid<<", "<<R<<endl;
+    cout <<"(L,M,R) :: "<<L<<", "<<mid<<", "<<R<<endl;
 #endif
-	if (lexm(S+A[mid]-1,N-A[mid]+1,P,M)) L=mid;
-	else { //
-	  if (0 == strncmp(P, S+A[mid]-1, min((long)M,N-A[mid]+1))) {
-	    if (M <= N-A[mid]+1) { // pattern is fully in suffix
-	      L=mid;
-	    } 
-	  } else {
-	      R=mid;
-	  }
-	}
+    if (lexm(S+A[mid]-1,N-A[mid]+1,P,M)) L=mid;
+    else { //
+      if (0 == strncmp(P, S+A[mid]-1, min((long)M,N-A[mid]+1))) {
+        if (M <= N-A[mid]+1) { // pattern is fully in suffix
+          L=mid;
+        } 
+      } else {
+          R=mid;
+      }
+    }
       }
 #ifdef DEBUGLEVEL
       cout << " L= "<<L<<" R= "<<R<<endl;
@@ -338,7 +338,7 @@ long min(long a, long b)
 // 0 <= L < Mid < R <= N-1
 
 long reConstructLR(long *H, long N, long *L, long *R, 
-		   long lo, long hi)
+           long lo, long hi)
 {
   long mid = (lo+hi)/2;
 #ifdef DEBUGLEVEL
@@ -397,70 +397,70 @@ void FasterStringSearch (char *S, long N, char *P, int M, long *A,
       cout <<"l "<<l<<", r "<<r<<" | left "<<left<<", mid "<<mid<<", right "<<right<<endl;
 #endif
       if (l >= r) {
-	if (L[mid-1] > l) {
-	  left = mid;
+    if (L[mid-1] > l) {
+      left = mid;
 #ifdef FASTDBG
-	  cout <<"."; 
+      cout <<"."; 
 #endif
-	} else if (L[mid-1] == l) {
-	  long j=lcp(S+A[mid]+l-1, P+l, min((M-l),(N-A[mid]-l+1)));
+    } else if (L[mid-1] == l) {
+      long j=lcp(S+A[mid]+l-1, P+l, min((M-l),(N-A[mid]-l+1)));
 #ifdef FASTDBG
-	  cout <<"!"<<l<<" "<<j<<" "<<M<<" "<<A[mid]-1<<"!"<<endl;
+      cout <<"!"<<l<<" "<<j<<" "<<M<<" "<<A[mid]-1<<"!"<<endl;
 #endif
-	  if (l+j < M && l+j+A[mid]-1 < N) {
-	    if (P[l+j] < S[A[mid]+l+j-1]) {
-	      right = mid; r = l+j; // recurse on left
-	    } else {
-	      left = mid; l = l+j; //recurse on right
-	    }
-	  } else {
-	    if (l+j+A[mid]-1 >= N && !(l+j == M)) { // pattern is to the right
-	      left = mid; l = l+j;
-	    } else if (l+j == M){
-	      right = mid; r = l+j;
-	    } else {;}
-	  }
-	} else {
+      if (l+j < M && l+j+A[mid]-1 < N) {
+        if (P[l+j] < S[A[mid]+l+j-1]) {
+          right = mid; r = l+j; // recurse on left
+        } else {
+          left = mid; l = l+j; //recurse on right
+        }
+      } else {
+        if (l+j+A[mid]-1 >= N && !(l+j == M)) { // pattern is to the right
+          left = mid; l = l+j;
+        } else if (l+j == M){
+          right = mid; r = l+j;
+        } else {;}
+      }
+    } else {
 #ifdef FASTDBG
-	  cout <<"'";
+      cout <<"'";
 #endif
-	  right = mid; r = L[mid-1];
-	}
+      right = mid; r = L[mid-1];
+    }
       } else { // l < r 
-	if (R[mid-1] > r) {
+    if (R[mid-1] > r) {
 #ifdef FASTDBG
-	  cout <<".."<<endl;
+      cout <<".."<<endl;
 #endif
-	  right = mid;
-	} else if (R[mid-1] == r) {
-	  long j=lcp(S+A[mid]+r-1, P+r, min((M-r), (N-A[mid]-r+1)));
+      right = mid;
+    } else if (R[mid-1] == r) {
+      long j=lcp(S+A[mid]+r-1, P+r, min((M-r), (N-A[mid]-r+1)));
 #ifdef FASTDBG
-	  cout <<"!!"<<r<<" "<<j<<" "<<M<<" "<<A[mid]-1<<"!!"<<endl;
+      cout <<"!!"<<r<<" "<<j<<" "<<M<<" "<<A[mid]-1<<"!!"<<endl;
 #endif
-	  if (r + j < M && A[mid]+r+j-1<N) {
-	    if (P[r+j] < S[A[mid]+r+j-1]) {
-	      right = mid; r = r+j; // recurse on left
-	    } else {
-	      left = mid; l = r+j; //recurse on right
-	    }
-	  } else {
-	    if (r+j == M) {
-	      right = mid; r = r+j;
-	    } else if (r+j+A[mid]-1 >= N) {
-	      left = mid; l = r+j;
-	    } else {;}
-	  }
-	} else { // R[i] < r
+      if (r + j < M && A[mid]+r+j-1<N) {
+        if (P[r+j] < S[A[mid]+r+j-1]) {
+          right = mid; r = r+j; // recurse on left
+        } else {
+          left = mid; l = r+j; //recurse on right
+        }
+      } else {
+        if (r+j == M) {
+          right = mid; r = r+j;
+        } else if (r+j+A[mid]-1 >= N) {
+          left = mid; l = r+j;
+        } else {;}
+      }
+    } else { // R[i] < r
 #ifdef FASTDBG
-	  cout <<"''"<<endl;
+      cout <<"''"<<endl;
 #endif
-	  left=mid; l = R[mid-1]; // recurse on right
-	}
-	//if (m==M || P[m] <= S[A[mid]+m]) {
-	//  right = mid; r = m;
-	//} else {
-	//  left = mid; l = m;
-	// }
+      left=mid; l = R[mid-1]; // recurse on right
+    }
+    //if (m==M || P[m] <= S[A[mid]+m]) {
+    //  right = mid; r = m;
+    //} else {
+    //  left = mid; l = m;
+    // }
       }
 
     }
@@ -488,70 +488,70 @@ void FasterStringSearch (char *S, long N, char *P, int M, long *A,
       cout <<"l "<<l<<", r "<<r<<" | left "<<left<<", mid "<<mid<<", right "<<right<<endl;
 #endif
       if (l >= r) {
-	if (L[mid-1] > l) {
-	  left = mid;
+    if (L[mid-1] > l) {
+      left = mid;
 #ifdef FASTDBG
-	  cout <<".";
+      cout <<".";
 #endif
-	} else if (L[mid-1] == l) {
-	  long j=lcp(S+A[mid]+l-1, P+l, min((M-l),(N-A[mid]-l+1)));
+    } else if (L[mid-1] == l) {
+      long j=lcp(S+A[mid]+l-1, P+l, min((M-l),(N-A[mid]-l+1)));
 #ifdef FASTDBG
-	  cout <<"!"<<l<<" "<<j<<" "<<M<<" "<<A[mid]-1<<"!"<<endl;			      
+      cout <<"!"<<l<<" "<<j<<" "<<M<<" "<<A[mid]-1<<"!"<<endl;			      
 #endif
-	  if (l+j < M && l+j+A[mid]-1 < N) {
-	    if (P[l+j] < S[A[mid]+l+j-1]) {
-	      right = mid; r = l+j; // recurse on left
-	    } else {
-	      left = mid; l = l+j; //recurse on right
-	    }
-	  } else {
-	    if (l+j+A[mid]-1 >= N && !(l+j == M)) { // pattern is to the right
-	      left = mid; l = l+j;
-	    } else if (l+j == M){
-	      left = mid; l = l+j;
-	    } else {;}
-	  }
-	} else {
+      if (l+j < M && l+j+A[mid]-1 < N) {
+        if (P[l+j] < S[A[mid]+l+j-1]) {
+          right = mid; r = l+j; // recurse on left
+        } else {
+          left = mid; l = l+j; //recurse on right
+        }
+      } else {
+        if (l+j+A[mid]-1 >= N && !(l+j == M)) { // pattern is to the right
+          left = mid; l = l+j;
+        } else if (l+j == M){
+          left = mid; l = l+j;
+        } else {;}
+      }
+    } else {
 #ifdef FASTDBG
-	  cout <<"'";
+      cout <<"'";
 #endif
-	  right = mid; r = L[mid-1];
-	}
+      right = mid; r = L[mid-1];
+    }
       } else { // l < r 
-	if (R[mid-1] > r) {
+    if (R[mid-1] > r) {
 #ifdef FASTDBG
-	  cout <<".."<<endl;
+      cout <<".."<<endl;
 #endif
-	  right = mid;
-	} else if (R[mid-1] == r) {
-	  long j=lcp(S+A[mid]+r-1, P+r, min((M-r), (N-A[mid]-r+1)));
+      right = mid;
+    } else if (R[mid-1] == r) {
+      long j=lcp(S+A[mid]+r-1, P+r, min((M-r), (N-A[mid]-r+1)));
 #ifdef FASTDBG
-	  cout <<"!!"<<r<<" "<<j<<" "<<M<<" "<<A[mid]-1<<"!!"<<endl;
+      cout <<"!!"<<r<<" "<<j<<" "<<M<<" "<<A[mid]-1<<"!!"<<endl;
 #endif
-	  if (r + j < M && A[mid]+r+j-1<N) {
-	    if (P[r+j] < S[A[mid]+r+j-1]) {
-	      right = mid; r = r+j; // recurse on left
-	    } else {
-	      left = mid; l = r+j; //recurse on right
-	    }
-	  } else {
-	    if (r+j == M) {
-	      left = mid; l = r+j;
-	    } else if (r+j+A[mid]-1 >= N) {
-	      left = mid; l = r+j;
-	    } else{;}
-	  }
-	} else { // R[i] < r
+      if (r + j < M && A[mid]+r+j-1<N) {
+        if (P[r+j] < S[A[mid]+r+j-1]) {
+          right = mid; r = r+j; // recurse on left
+        } else {
+          left = mid; l = r+j; //recurse on right
+        }
+      } else {
+        if (r+j == M) {
+          left = mid; l = r+j;
+        } else if (r+j+A[mid]-1 >= N) {
+          left = mid; l = r+j;
+        } else{;}
+      }
+    } else { // R[i] < r
 #ifdef FASTDBG
-	  cout <<"''"<<endl;
+      cout <<"''"<<endl;
 #endif
-	  left=mid; l = R[mid-1]; // recurse on right
-	}
-	//if (m==M || P[m] <= S[A[mid]+m]) {
-	//  right = mid; r = m;
-	//} else {
-	//  left = mid; l = m;
-	// }
+      left=mid; l = R[mid-1]; // recurse on right
+    }
+    //if (m==M || P[m] <= S[A[mid]+m]) {
+    //  right = mid; r = m;
+    //} else {
+    //  left = mid; l = m;
+    // }
       }
     }
 
@@ -569,9 +569,9 @@ void printSuffixes(char *s,long n,long *a)
     {
       cout <<"("<<i<<"):"<<a[i]<<":";
       for (long j=a[i]-1;j<n;j++) 
-	{
-	  cout <<s[j];
-	}
+    {
+      cout <<s[j];
+    }
       cout << endl;
     }
 }
@@ -582,16 +582,16 @@ void printLandR(long *l, long *r, long n)
   for(long i=1;i<=n;i++) {
       cout <<i<<",";
       }
-	cout <<endl<<"L_p[i]=lcp(A_lo, A_i) :";
-	for(long i=0;i<n;i++) {
-		cout <<l[i]<<",";
-		}
-	cout <<endl<<"R_p[i]=lcp(A_i, A_hi) :";
-	for(long i=0;i<n;i++) {
-		cout <<r[i]<<",";
-		}
-	cout <<endl;
-	return;
+    cout <<endl<<"L_p[i]=lcp(A_lo, A_i) :";
+    for(long i=0;i<n;i++) {
+        cout <<l[i]<<",";
+        }
+    cout <<endl<<"R_p[i]=lcp(A_i, A_hi) :";
+    for(long i=0;i<n;i++) {
+        cout <<r[i]<<",";
+        }
+    cout <<endl;
+    return;
 }
 
 // test function
@@ -648,7 +648,7 @@ void t1(void)
     cout << "Pattern found";
     printMatches(n,a,lo,hi);
   } else cout << "Pattern not found";
-	  
+      
   StringSearch(s, n, "mississippi", 11, a, &lo, &hi);
   cout <<lo<<","<<hi<<endl;
   if (lo <= hi) {
@@ -725,8 +725,8 @@ int verify(char *S,long N,char *P,long M,long *A,long Lo,long Hi)
   for (long i=Lo;i<=Hi;i++) {
     if (0 <= i && i < N) {
       if (0 != strncmp(S+A[i]-1, P, min(M, N-A[i]+1))) {
-	answer=0;
-	cout << "Search error Lo "<<Lo<<" Hi "<<Hi<<" at i:"<<i<<", A[i]-1:"<<A[i]-1<<endl;
+    answer=0;
+    cout << "Search error Lo "<<Lo<<" Hi "<<Hi<<" at i:"<<i<<", A[i]-1:"<<A[i]-1<<endl;
       } else answer = 1;
     } else {
       answer=0;
@@ -790,7 +790,7 @@ int main(int argc, char* argv[])
 
 #ifdef ASDFASDF
 int main(){
-	  
+      
   //t1();
   //testlexm();
   return 0;
