@@ -1,0 +1,68 @@
+There are 4 files including the Readme:
+1) suffix.cc : source 
+2) input     : file containing a test string
+3) Makefile
+
+The file suffix.cc contains the c++ code for the project.
+
+The file contains a main() function that can test the various suffix array procedures for some input specified as follows.
+
+The Makefile creates the executable "suf" which can then be called with the following parameters:
+1) length of the input string
+2) file containing the input string
+3) pattern
+
+The suffix array procedures themselves don't generate the debug output shown below.
+But it can be made by turning on appropriate debug macros found at the beginning of the suffix.cc file.
+
+Example: 
+
+./suf 35 input lazydog
+
+throws the following output:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+lectura% ./suf 35 input lazydog
+(0):35:
+(1):27:alazydog
+(2):29:azydog
+(3):9:brownfoxjumpedoveralazydog
+(4):7:ckbrownfoxjumpedoveralazydog
+(5):32:dog
+(6):22:doveralazydog
+(7):21:edoveralazydog
+(8):3:equickbrownfoxjumpedoveralazydog
+(9):25:eralazydog
+(10):14:foxjumpedoveralazydog
+(11):34:g
+(12):2:hequickbrownfoxjumpedoveralazydog
+(13):6:ickbrownfoxjumpedoveralazydog
+(14):17:jumpedoveralazydog
+(15):8:kbrownfoxjumpedoveralazydog
+(16):28:lazydog
+(17):19:mpedoveralazydog
+(18):13:nfoxjumpedoveralazydog
+(19):33:og
+(20):23:overalazydog
+(21):11:ownfoxjumpedoveralazydog
+(22):15:oxjumpedoveralazydog
+(23):20:pedoveralazydog
+(24):4:quickbrownfoxjumpedoveralazydog
+(25):26:ralazydog
+(26):10:rownfoxjumpedoveralazydog
+(27):1:thequickbrownfoxjumpedoveralazydog
+(28):5:uickbrownfoxjumpedoveralazydog
+(29):18:umpedoveralazydog
+(30):24:veralazydog
+(31):12:wnfoxjumpedoveralazydog
+(32):16:xjumpedoveralazydog
+(33):31:ydog
+(34):30:zydog
+String search worked. Lo16, Hi 16
+
+                      :1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,
+L_p[i]=lcp(A_lo, A_i) :0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,
+R_p[i]=lcp(A_i, A_hi) :1,0,0,0,2,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,
+Fast String search worked. Lo16, Hi 16
+lectura%
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
